@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,8 +16,16 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
+
+import cn.cbg.testwebview.utils.FileUtils;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 
 public class SubscribeMessageActivity extends Activity implements View.OnClickListener{
@@ -67,22 +74,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 		data = getIntent();
 		paramUrl = data.getStringExtra("url");
 		currentUrl = paramUrl;
-		total = data.getStringExtra("total");
 
-		//开播的条件
-		String title=HttpUtils.getFileName(paramUrl);
-		targetFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),DownloadService.DOWNLOAD_PATH+"/"+title );
-
-		if (!(targetFile.length() + "").equals(total)) {
-			if (progressDialog != null && progressDialog.isShowing()) {
-				progressDialog.dismiss();
-			}
-
-			progressDialog.setTitle("提示");
-			progressDialog.setMessage("正在努力下载……");
-			progressDialog.show();
-
-		}
 
 
 		seekBar = (SeekBar)this.findViewById(R.id.MusicSeekBar);
@@ -94,16 +86,66 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 
 		btnPlayOrPause = (Button)this.findViewById(R.id.BtnPlayorPause);
 
-		if((targetFile.length()+"").equals(total)){
-			doPlay();
+
+		downloadAndPlay(currentUrl,false);
+
+
+	}
+
+
+	public void downloadAndPlay(String url,boolean fromResume){
+		String fileName = HttpUtils.getFileName(url);
+		String path  = FileUtils.getMusicDir().concat(fileName);
+		File file = new File(path);
+		final boolean isResume = fromResume;
+		if(!file.exists()){
+			OkHttpUtils.get().url(url).build()
+					.execute(new FileCallBack(FileUtils.getMusicDir(), fileName) {
+						@Override
+						public void onBefore(Request request, int id) {
+							if (progressDialog != null && progressDialog.isShowing()) {
+								progressDialog.dismiss();
+							}
+
+							progressDialog.setTitle("提示");
+							progressDialog.setMessage("正在努力下载……"+(isResume?"onResume":"onCreate"));
+							progressDialog.show();
+						}
+
+						@Override
+						public void inProgress(float progress, long total, int id) {
+							progressDialog.setMessage("正在努力下载……"+((float)Math.round(progress*100*100)/100)+"%\n");
+						}
+
+						@Override
+						public void onResponse(File file, int id) {
+							//隐藏菊花:不为空，正在显示。才隐藏
+							if(progressDialog!=null&&progressDialog.isShowing()){
+								progressDialog.dismiss();
+							}
+							doPlay(file,isResume);
+						}
+
+						@Override
+						public void onError(Call call, Exception e, int id) {
+
+						}
+
+						@Override
+						public void onAfter(int id) {
+
+						}
+					});
+		}else {
+			doPlay(file,fromResume);
 		}
 
 	}
 
-	private void doPlay(){
-		//隐藏菊花:不为空，正在显示。才隐藏
-		if(progressDialog!=null&&progressDialog.isShowing()){
-			progressDialog.dismiss();
+	private void doPlay(File targetFile,boolean fromResume){
+		if(fromResume){
+			musicService.reStart(targetFile.getAbsolutePath());
+			return;
 		}
 		musicService = new MusicService(targetFile.getAbsolutePath());
 		bindServiceConnection();
@@ -114,25 +156,6 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 		@Override
 		public void run() {
 
-			if(needChanged&&
-					targetFile2!=null&&compareFileEqual(targetFile2.length(),total2)){
-				musicService.reStart(targetFile2.getAbsolutePath());
-				progressDialog.dismiss();
-				needChanged =false;
-			}
-
-			if (!(targetFile.length() + "").equals(total) && total!=null) {
-				long current = targetFile.length();
-				double progress = Math.floor(1000.0 * current / Integer.parseInt(total)) / 10;
-				progressDialog.setMessage("正在努力下载……" + progress + "% \n" +
-						"为了节省流量，第二次打开不需流量\n" +
-						"文件路径：内存卡\\Music\\kezhu的文件夹，\n" +
-						"即"+targetFile.getAbsolutePath());
-			}else{
-					if(!isStartedPlay) {
-						doPlay();
-					}
-				}
 			if(musicService.mp.isPlaying()) {
 				musicStatus.setText(getResources().getString(R.string.playing));
 				btnPlayOrPause.setText(getResources().getString(R.string.pause).toUpperCase());
@@ -171,12 +194,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 		setIntent(intent);
 	}
 
-	private String downloadParamUrl(String url){
-		//开播的条件
-		String title=HttpUtils.getFileName(url);
-		 targetFile2 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),DownloadService.DOWNLOAD_PATH+"/"+title );
-		return targetFile2.toURI().toString();
-	}
+
 
 	private boolean compareFileEqual(long fileLength,String total){
 		if (!(fileLength+ "").equals(total) && total!=null){
@@ -188,14 +206,8 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 	protected void onResume() {
 		data = getIntent();
 		paramUrl = data.getStringExtra("url");
-		total2 = data.getStringExtra("total");
 		if(!paramUrl.equals(currentUrl)){
-			String paramUrlLocal = downloadParamUrl(paramUrl);
-			//url变化
-			needChanged = true;
-			progressDialog.setMessage("正在努力保存文件……" +paramUrlLocal);
-			progressDialog.show();
-			MusicService.musicDir[1] = paramUrlLocal;
+			downloadAndPlay(paramUrl,true);
 		}
 		if(musicService.mp.isPlaying()) {
 			musicStatus.setText(getResources().getString(R.string.playing));

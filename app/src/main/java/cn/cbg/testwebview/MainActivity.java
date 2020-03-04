@@ -26,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
@@ -231,8 +230,6 @@ public class MainActivity extends Activity{
 		@SuppressLint("JavascriptInterface")
 		@JavascriptInterface
 		public void showToast(String url){
-			String total = HttpUtils.getTotal(url);
-			downloadUrl(url);
 			if(!downloaded) {
 				new Thread(new Runnable() {
 					@Override
@@ -245,7 +242,6 @@ public class MainActivity extends Activity{
 			}
 			Intent intent2 = new Intent(MainActivity.this, SubscribeMessageActivity.class);
 			intent2.putExtra("url", url);
-			intent2.putExtra("total",total);
 			startActivity(intent2);
 		}
 	}
