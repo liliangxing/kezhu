@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/goto_send_btn"
+            style="@style/MMLineActionButton"
+            android:layout_margin="10dp"
+            android:text="@string/goto_send"/>
+
+        <Button
+            android:id="@+id/launch_wx_btn"
+            style="@style/MMLineActionButton"
+            android:layout_margin="10dp"
+            android:text="@string/launch_wx"/>
+
+        <Button
+            android:id="@+id/goto_subscribe_message_btn"
+            style="@style/MMLineActionButton"
+            android:layout_margin="10dp"
+            android:text="@string/subscribe_message"/>
+
+        <Button
+            android:id="@+id/goto_subscribe_mini_program_msg_btn"
+            style="@style/MMLineActionButton"
+            android:layout_margin="10dp"
+            android:text="@string/subscribe_mini_program"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_web"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/et_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请输入地址" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="toChange"
+            android:text="跳转" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/video_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        ></FrameLayout>
+    <Button
+        android:id="@+id/video_landport"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="横竖屏切换(点击视频链接，全屏收看视频)"
+        android:gravity="center"
+        />
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

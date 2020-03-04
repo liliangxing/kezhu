@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/NavPage"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        style="@style/MMBriefText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share_title_message" />
+
+    <EditText
+        android:id="@+id/mini_program_content_et"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="top"
+        android:hint="@string/subscribe_content"
+        android:lines="5"
+        android:maxLines="5"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/mini_program_title_et"
+        style="@style/MMBriefText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" />
+
+    <TextView
+        android:id="@+id/mini_program_url_et"
+        style="@style/MMBriefText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dip"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/mini_program_app_url_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4dip" />
+
+        <TextView
+            style="@style/MMBriefText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="3dp"
+            android:text="@string/share_app_download_message" />
+
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/share_all_message_btn"
+        style="@style/MMLineActionButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/share_all_message" />
+
+    <Button
+        android:id="@+id/share_part_message_btn"
+        style="@style/MMLineActionButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/share_part_message" />
+
+</LinearLayout>
