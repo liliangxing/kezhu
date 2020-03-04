@@ -84,6 +84,10 @@ public class MainActivity extends Activity{
 		linearLayout.setVisibility(View.GONE);
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
 	/**
 	 * 初始化控件
 	 */
