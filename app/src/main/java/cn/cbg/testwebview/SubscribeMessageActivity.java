@@ -208,6 +208,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 		paramUrl = data.getStringExtra("url");
 		if(!paramUrl.equals(currentUrl)){
 			downloadAndPlay(paramUrl,true);
+			currentUrl = paramUrl;
 		}
 		if(musicService.mp.isPlaying()) {
 			musicStatus.setText(getResources().getString(R.string.playing));
