@@ -269,8 +269,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					MusicService.musicDir[0] = checkDownload(MusicService.musicDir[0]);
-					MusicService.musicDir[2] = checkDownload(MusicService.musicDir[2]);
+					checkDownload(MusicService.musicDir[0]);
+					checkDownload(MusicService.musicDir[2]);
 					downloaded = true;
 				}
 			}).start();
@@ -294,7 +294,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		startService(intent);
 	}
 
-	private static String  getDownloadFilePath(String url){
+	public static String  getDownloadFilePath(String url){
 		String title =HttpUtils.getFileName(url);
 		File targetFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),DownloadService.DOWNLOAD_PATH+"/"+title );
 		return targetFile.toURI().toString();
@@ -353,7 +353,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	}
 
     public void toStopAndHide(View view){
-		SubscribeMessageActivity.instance.finish();
+		SubscribeMessageActivity.instance.musicService.mp.pause();
 		ivLayOut.setVisibility(View.GONE);
     }
 

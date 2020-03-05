@@ -32,7 +32,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 
 
 	private SeekBar seekBar;
-	private MusicService musicService;
+	protected MusicService musicService;
 	private TextView musicStatus;
 	private TextView musicTime;
 	private Button btnPlayOrPause;
@@ -47,7 +47,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 	private boolean needChanged;
 	private String currentUrl;
 	private String paramUrl;
-	public static Activity instance;
+	public static SubscribeMessageActivity instance;
 
 	private ServiceConnection sc = new ServiceConnection() {
 		@Override
@@ -212,6 +212,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 			downloadAndPlay(paramUrl,true);
 			currentUrl = paramUrl;
 		}
+		musicService.mp.start();
 		if(musicService.mp.isPlaying()) {
 			musicStatus.setText(getResources().getString(R.string.playing));
 		} else {

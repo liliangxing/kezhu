@@ -85,8 +85,17 @@ public class DownloadService extends IntentService {
             fos.close();
             cancelNotification(); //重新出现滚动消息
             sendNotification("音乐下载完成", "音乐下载完毕");
+            doChangeFileLink(url);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void doChangeFileLink(String url){
+        if(url.equals(MusicService.musicDir[0])){
+            MusicService.musicDir[0] = MainActivity.getDownloadFilePath(url);
+        }else if(url.equals(MusicService.musicDir[2])){
+            MusicService.musicDir[2] = MainActivity.getDownloadFilePath(url);
         }
     }
     /**
