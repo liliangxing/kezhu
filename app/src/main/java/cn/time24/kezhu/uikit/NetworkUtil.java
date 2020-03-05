@@ -1,4 +1,4 @@
-package cn.cbg.testwebview.uikit;
+package cn.time24.kezhu.uikit;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

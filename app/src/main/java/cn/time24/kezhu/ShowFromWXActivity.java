@@ -1,10 +1,12 @@
-package cn.cbg.testwebview;
+package cn.time24.kezhu;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
+
+import cn.cbg.testwebview.R;
 
 public class ShowFromWXActivity extends Activity {
 	

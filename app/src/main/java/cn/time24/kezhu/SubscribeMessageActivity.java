@@ -1,4 +1,4 @@
-package cn.cbg.testwebview;
+package cn.time24.kezhu;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -19,7 +19,8 @@ import android.widget.TextView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
-import cn.cbg.testwebview.utils.FileUtils;
+import cn.cbg.testwebview.R;
+import cn.time24.kezhu.utils.FileUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

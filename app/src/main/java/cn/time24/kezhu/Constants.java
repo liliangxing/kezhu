@@ -1,4 +1,4 @@
-package cn.cbg.testwebview;
+package cn.time24.kezhu;
 
 public class Constants {
     public static final String APP_ID = "wx0e5bf15afbd7d7b4";

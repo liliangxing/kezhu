@@ -1,19 +1,17 @@
-package cn.cbg.testwebview;
+package cn.time24.kezhu;
 
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.Binder;
 import android.os.Environment;
-import android.os.IBinder;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+
+import cn.cbg.testwebview.R;
 
 /**
  * 下载服务 IntentService

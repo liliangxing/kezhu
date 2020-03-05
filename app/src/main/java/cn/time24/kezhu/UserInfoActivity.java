@@ -1,4 +1,4 @@
-package cn.cbg.testwebview;
+package cn.time24.kezhu;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,14 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.cbg.testwebview.uikit.NetworkUtil;
+import cn.time24.kezhu.uikit.NetworkUtil;
+import cn.cbg.testwebview.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 
 public class UserInfoActivity extends Activity {
     private static String TAG = "MicroMsg.UserInfoActivity";

@@ -1,11 +1,10 @@
-package cn.cbg.testwebview.uikit;
+package cn.time24.kezhu.uikit;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.MessageDigest;
 
-import cn.cbg.testwebview.Util;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;

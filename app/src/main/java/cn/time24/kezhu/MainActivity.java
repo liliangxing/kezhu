@@ -1,4 +1,4 @@
-package cn.cbg.testwebview;
+package cn.time24.kezhu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -46,6 +46,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+
+import cn.cbg.testwebview.R;
 
 
 public class MainActivity extends Activity implements View.OnClickListener{

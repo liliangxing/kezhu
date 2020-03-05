@@ -1,4 +1,4 @@
-package cn.cbg.testwebview.utils;
+package cn.time24.kezhu.utils;
 
 import android.os.Environment;
 import android.text.TextUtils;

@@ -18,7 +18,7 @@
         android:allowBackup="false">
 
         <activity
-            android:name=".MainActivity"
+            android:name="cn.time24.kezhu.MainActivity"
             android:configChanges="orientation"
             android:launchMode="singleInstance"
             android:label="@string/app_name">
@@ -34,25 +34,25 @@
         </activity>
 
         <activity
-            android:name=".ShowFromWXActivity"
+            android:name="cn.time24.kezhu.ShowFromWXActivity"
             android:label="@string/app_name"
             android:theme="@style/MMTheme.Basic"/>
 
-        <activity android:name=".SubscribeMiniProgramMsgActivity"
+        <activity android:name="cn.time24.kezhu.SubscribeMiniProgramMsgActivity"
             android:label="@string/subscribe_message"
             android:theme="@style/MMTheme.Basic"/>
 
-        <activity android:name=".SubscribeMessageActivity"
+        <activity android:name="cn.time24.kezhu.SubscribeMessageActivity"
             android:launchMode="singleTask" android:exported="true"
             android:label="@string/subscribe_message_title"/>
 
-        <activity android:name=".UserInfoActivity"
+        <activity android:name="cn.time24.kezhu.UserInfoActivity"
             android:label="@string/app_name"
             android:theme="@style/MMTheme.Basic"/>
 
 
-        <service android:name="cn.cbg.testwebview.MusicService" android:exported="true"/>
-        <service android:name="cn.cbg.testwebview.DownloadService" android:exported="true"/>
+        <service android:name="cn.cbg.testwebview.cn.cbg.kezhu.MusicService" android:exported="true"/>
+        <service android:name="cn.cbg.testwebview.cn.cbg.kezhu.DownloadService" android:exported="true"/>
 
     </application>
 

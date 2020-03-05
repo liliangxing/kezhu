@@ -1,4 +1,4 @@
-package cn.cbg.testwebview;
+package cn.time24.kezhu;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -18,6 +18,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
+import cn.cbg.testwebview.R;
 
 
 /**
