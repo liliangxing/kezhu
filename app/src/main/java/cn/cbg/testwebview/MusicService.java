@@ -37,6 +37,8 @@ public class MusicService extends Service {
         start(url,true);
     }
 
+
+
     public void start(String url,boolean isSeek) {
         try {
             musicIndex = 1;

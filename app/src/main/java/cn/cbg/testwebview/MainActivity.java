@@ -17,6 +17,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -37,6 +39,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -45,7 +48,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity implements View.OnClickListener{
 
 	private WebView videowebview;
 	private LinearLayout linearLayout;
@@ -64,18 +67,35 @@ public class MainActivity extends Activity{
 	private xWebChromeClient xwebchromeclient;
 	private WebChromeClient.CustomViewCallback     xCustomViewCallback;
 
+	private ImageView ivPlay;
+	private LinearLayout ivLayOut;
+	private JSInterface jsInterface;
+	private String LAST_OPEN_URL;
+	private Handler handler1;
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		checkPermission();
 		initView();
+		jsInterface = new JSInterface();
 		videowebview.addJavascriptInterface(
-				new JSInterface()
+				jsInterface
 				, "itcast");
 
 		initwidget();
 		initListener();
+
+		handler1 = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				String url = LAST_OPEN_URL;
+				if (url!=null) {
+					showToastMsg(url);
+				}
+			}
+		};
 
 		String url = readFileData(FILE_NAME); // 读取文件
 		if(url.equals("")){url=HOME_PAGE;}
@@ -95,6 +115,8 @@ public class MainActivity extends Activity{
 		videowebview = (WebView) findViewById(R.id.webview);
 		etUrl = (EditText) findViewById(R.id.et_url);
 		linearLayout = findViewById(R.id.ll_web);
+		ivPlay = findViewById(R.id.iv_play);
+		ivLayOut = findViewById(R.id.iv_play_layout);
 	}
 
 
@@ -234,22 +256,29 @@ public class MainActivity extends Activity{
 		@SuppressLint("JavascriptInterface")
 		@JavascriptInterface
 		public void showToast(String url){
-			if(!downloaded) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						MusicService.musicDir[0] = checkDownload(MusicService.musicDir[0]);
-						MusicService.musicDir[2] = checkDownload(MusicService.musicDir[2]);
-						downloaded = true;
-					}
-				}).start();
-			}
-			Intent intent2 = new Intent(MainActivity.this, SubscribeMessageActivity.class);
-			intent2.putExtra("url", url);
-			startActivity(intent2);
+			Message message = new Message();
+			LAST_OPEN_URL=url;
+			handler1.sendMessage(message);
 		}
 	}
 
+	private void showToastMsg(String url){
+		ivLayOut.setVisibility(View.VISIBLE);
+		LAST_OPEN_URL=url;
+		if(!downloaded) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					MusicService.musicDir[0] = checkDownload(MusicService.musicDir[0]);
+					MusicService.musicDir[2] = checkDownload(MusicService.musicDir[2]);
+					downloaded = true;
+				}
+			}).start();
+		}
+		Intent intent2 = new Intent(MainActivity.this, SubscribeMessageActivity.class);
+		intent2.putExtra("url", url);
+		startActivity(intent2);
+	}
 	private String checkDownload(String url){
 		if(!HttpUtils.checkUrl(url)){
 			return url;
@@ -322,6 +351,11 @@ public class MainActivity extends Activity{
 		//2.webview展示地址
 		videowebview.loadUrl(url);
 	}
+
+    public void toStopAndHide(View view){
+		SubscribeMessageActivity.instance.finish();
+		ivLayOut.setVisibility(View.GONE);
+    }
 
 
 	/**
@@ -575,7 +609,8 @@ public class MainActivity extends Activity{
 
 	private void initListener() {
 		// TODO Auto-generated method stub
-		videolandport.setOnClickListener(new Listener());
+		videolandport.setOnClickListener(this);
+		ivPlay.setOnClickListener(this);
 	}
 
 	private void initwidget() {
@@ -613,7 +648,7 @@ public class MainActivity extends Activity{
 		videowebview.setWebViewClient(new xWebViewClientent());
 	}
 
-	class Listener implements View.OnClickListener {
+
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
@@ -628,11 +663,14 @@ public class MainActivity extends Activity{
 
 					islandport = !islandport;
 					break;
+				case R.id.iv_play:
+					showToastMsg(LAST_OPEN_URL);
+					break;
 				default:
 					break;
 			}
 		}
-	}
+
 	/**
 	 * 判断是否是全屏
 	 * @return

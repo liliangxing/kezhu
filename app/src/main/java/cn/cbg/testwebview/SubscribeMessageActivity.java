@@ -47,6 +47,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 	private boolean needChanged;
 	private String currentUrl;
 	private String paramUrl;
+	public static Activity instance;
 
 	private ServiceConnection sc = new ServiceConnection() {
 		@Override
@@ -67,6 +68,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
+		instance =this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subscribe_message);
 		//弹出菊花
