@@ -46,8 +46,10 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import cn.cbg.testwebview.R;
+import cn.time24.kezhu.R;
 
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -546,6 +548,21 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	 * 处理各种通知、请求等事件
 	 * @author
 	 */
+	/**
+	 * 验证网址Url
+	 *
+	 * @param 待验证的字符串
+	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
+	 */
+	public static boolean IsUrl(String file) {
+		String suffixes = "avi|mpeg|3gp|mp3|mp4|wav|jpeg|gif|jpg|png|apk|exe|txt|java|doc";
+		Pattern pat = Pattern.compile("([\\w|-]+)[\\.](" + suffixes + ")");//正则判断
+		Matcher mc = pat.matcher(file);
+		while(mc.find()){
+			return true;
+		}
+		return false;
+	}
 	public class xWebViewClientent extends WebViewClient {
 		/**
 		 * 当打开超链接的时候，回调的方法
@@ -554,6 +571,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		 */
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			if(IsUrl(url)){
+				Intent intent = new Intent(MainActivity.this, FullScreenActivity.class);
+				intent.putExtra("url",url);
+				startActivity(intent);
+				return true;
+			}
 			if(url.contains("playVideo=1")){
 				videolandport.setVisibility(View.VISIBLE);
 			}else {

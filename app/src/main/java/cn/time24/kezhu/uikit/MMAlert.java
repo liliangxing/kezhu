@@ -3,7 +3,7 @@ package cn.time24.kezhu.uikit;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cbg.testwebview.R;
+import cn.time24.kezhu.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;

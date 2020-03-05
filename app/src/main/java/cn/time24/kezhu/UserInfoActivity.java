@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.time24.kezhu.uikit.NetworkUtil;
-import cn.cbg.testwebview.R;
+import cn.time24.kezhu.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

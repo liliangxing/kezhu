@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
-import cn.cbg.testwebview.R;
+import cn.time24.kezhu.R;
 import cn.time24.kezhu.utils.FileUtils;
 
 import java.io.File;
@@ -40,12 +40,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 	private SimpleDateFormat time = new SimpleDateFormat("m:ss");
 	private Intent data;
 	private ProgressDialog progressDialog;//加载界面的菊花
-	private File targetFile;
-	private File targetFile2;
-	private String total;
-	private String total2;
 	private boolean isStartedPlay;
-	private boolean needChanged;
 	private String currentUrl;
 	private String paramUrl;
 	public static SubscribeMessageActivity instance;

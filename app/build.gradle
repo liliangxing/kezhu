@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "cn.cbg.testwebview"
+        applicationId "cn.time24.kezhu"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1

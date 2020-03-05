@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.cbg.testwebview">
+    package="cn.time24.kezhu">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -46,13 +46,17 @@
             android:launchMode="singleTask" android:exported="true"
             android:label="@string/subscribe_message_title"/>
 
+        <activity android:name="cn.time24.kezhu.FullScreenActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" >
+        </activity>
+
         <activity android:name="cn.time24.kezhu.UserInfoActivity"
             android:label="@string/app_name"
             android:theme="@style/MMTheme.Basic"/>
 
 
-        <service android:name="cn.cbg.testwebview.cn.cbg.kezhu.MusicService" android:exported="true"/>
-        <service android:name="cn.cbg.testwebview.cn.cbg.kezhu.DownloadService" android:exported="true"/>
+        <service android:name="cn.time24.kezhu.MusicService" android:exported="true"/>
+        <service android:name="cn.time24.kezhu.DownloadService" android:exported="true"/>
 
     </application>
 

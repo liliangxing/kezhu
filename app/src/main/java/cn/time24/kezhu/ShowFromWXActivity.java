@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import cn.cbg.testwebview.R;
+import cn.time24.kezhu.R;
 
 public class ShowFromWXActivity extends Activity {
 	
