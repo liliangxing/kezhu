@@ -31,6 +31,7 @@ public class MusicService extends Service {
     }
     public MusicService(String url) {
         start(url,false);
+        mp.setLooping(true);
     }
 
     public void reStart(String url) {
@@ -48,7 +49,6 @@ public class MusicService extends Service {
                 mp.seekTo(0);
             }
             mp.start();
-            mp.setLooping(true);
         } catch (Exception e) {
             Log.d("hint","can't get to the song");
             e.printStackTrace();
