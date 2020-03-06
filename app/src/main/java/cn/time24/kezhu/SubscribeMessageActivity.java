@@ -151,7 +151,6 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 		bindServiceConnection();
 		seekBar.setProgress(musicService.mp.getCurrentPosition());
 		seekBar.setMax(musicService.mp.getDuration());
-		musicService.mp.setLooping(true);
 		isStartedPlay=true;
 	}
 	public android.os.Handler handler = new android.os.Handler();

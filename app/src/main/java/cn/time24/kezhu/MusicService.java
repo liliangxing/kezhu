@@ -48,6 +48,7 @@ public class MusicService extends Service {
                 mp.seekTo(0);
             }
             mp.start();
+            mp.setLooping(true);
         } catch (Exception e) {
             Log.d("hint","can't get to the song");
             e.printStackTrace();
