@@ -267,7 +267,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	}
 
 	private void showToastMsg(String url){
-		ivLayOut.setVisibility(View.VISIBLE);
 		LAST_OPEN_URL=url;
 		if(!downloaded) {
 			new Thread(new Runnable() {
@@ -282,6 +281,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		Intent intent2 = new Intent(MainActivity.this, SubscribeMessageActivity.class);
 		intent2.putExtra("url", url);
 		startActivity(intent2);
+		ivLayOut.setVisibility(View.VISIBLE);
 	}
 	private String checkDownload(String url){
 		if(!HttpUtils.checkUrl(url)){

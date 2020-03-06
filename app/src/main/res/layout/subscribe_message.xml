@@ -45,8 +45,8 @@
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/BtnQuit"
-			android:text="@string/btnQuit"
+			android:id="@+id/BtnRepeat"
+			android:text="@string/btnRepeat"
 			android:onClick="onClick"/>
 
 	</LinearLayout>
@@ -69,6 +69,12 @@
 			android:text="@string/btnNext"
 			android:onClick="onClick"/>
 
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/BtnQuit"
+			android:text="@string/btnQuit"
+			android:onClick="onClick"/>
 	</LinearLayout>
 
 </LinearLayout>

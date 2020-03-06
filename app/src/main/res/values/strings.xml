@@ -154,6 +154,7 @@
     <string name="action_close">返回上一页</string>
     <string name="btnPlayorPause">PlAY/PAUSE</string>
     <string name="btnStop">STOP</string>
+    <string name="btnRepeat">目前是[单曲循环]</string>
     <string name="btnQuit">QUIT</string>
     <string name="btnPre">PREVIOUS\n老法师念佛慢板[已下载]</string>
     <string name="btnNext">NEXT\n老法师念佛木鱼版[已下载]</string>

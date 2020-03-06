@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 	private TextView musicStatus;
 	private TextView musicTime;
 	private Button btnPlayOrPause;
+	private Button btnRepeat;
 	private SimpleDateFormat time = new SimpleDateFormat("m:ss");
 	private Intent data;
 	private ProgressDialog progressDialog;//加载界面的菊花
@@ -44,6 +46,7 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 	private String currentUrl;
 	private String paramUrl;
 	public static SubscribeMessageActivity instance;
+	public static boolean isRepeat =true;
 
 	private ServiceConnection sc = new ServiceConnection() {
 		@Override
@@ -76,13 +79,12 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 
 
 		seekBar = (SeekBar)this.findViewById(R.id.MusicSeekBar);
-		seekBar.setProgress(musicService.mp.getCurrentPosition());
-		seekBar.setMax(musicService.mp.getDuration());
 
 		musicStatus = (TextView)this.findViewById(R.id.MusicStatus);
 		musicTime = (TextView)this.findViewById(R.id.MusicTime);
 
 		btnPlayOrPause = (Button)this.findViewById(R.id.BtnPlayorPause);
+		btnRepeat = (Button)this.findViewById(R.id.BtnRepeat);
 
 
 		downloadAndPlay(currentUrl,false);
@@ -147,6 +149,9 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 		}
 		musicService = new MusicService(targetFile.getAbsolutePath());
 		bindServiceConnection();
+		seekBar.setProgress(musicService.mp.getCurrentPosition());
+		seekBar.setMax(musicService.mp.getDuration());
+		musicService.mp.setLooping(true);
 		isStartedPlay=true;
 	}
 	public android.os.Handler handler = new android.os.Handler();
@@ -230,6 +235,17 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 			case R.id.BtnStop:
 				musicService.stop();
 				seekBar.setProgress(0);
+				break;
+			case R.id.BtnRepeat:
+				if(!isRepeat) {
+					btnRepeat.setText("目前是[单曲循环]");
+					musicService.mp.setLooping(true);
+					isRepeat =true;
+				}else {
+					btnRepeat.setText("目前是[不重复]");
+					musicService.mp.setLooping(false);
+					isRepeat =false;
+				}
 				break;
 			case R.id.BtnQuit:
 				doFinish();

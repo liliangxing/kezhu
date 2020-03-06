@@ -20,9 +20,9 @@ public class MusicService extends Service {
     }
 
     public static String[] musicDir = new String[]{
-            "https://tw3.amtb.de/media/mp3/61/61-126/61-126-0001.mp3",
-            "https://tw3.amtb.de/media/mp3/61/61-126/61-126-0001.mp3",
-            "https://tw3.amtb.de/media/mp3/61/61-232/61-232-0001.mp3"};
+            "http://al-media.ciguang.tv/mp3/61/61-126/61-126-0001.mp3",
+            "http://al-media.ciguang.tv/mp3/61/61-126/61-126-0001.mp3",
+            "http://al-media.ciguang.tv/mp3/61/61-232/61-232-0001.mp3"};
     private static int musicIndex = 1;
 
     public static MediaPlayer mp = new MediaPlayer();
@@ -36,8 +36,6 @@ public class MusicService extends Service {
     public void reStart(String url) {
         start(url,true);
     }
-
-
 
     public void start(String url,boolean isSeek) {
         try {
