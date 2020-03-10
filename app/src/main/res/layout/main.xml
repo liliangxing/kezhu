@@ -80,28 +80,26 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:padding="4dp"
             android:gravity="center"
             android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/iv_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显示播放" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
-                android:visibility="invisible"
                 android:onClick="toStopAndHide"
-                android:text="退出播放" />
-    <ImageView
-        android:id="@+id/iv_play"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_loading4" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@+id/iv_play"
-            android:onClick="toStopAndHide"
-            android:text="退出播放" />
+                android:text="关闭播放" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:onClick="toHide"
+                android:text="隐藏播放" />
         </LinearLayout>
     </LinearLayout>
     <WebView

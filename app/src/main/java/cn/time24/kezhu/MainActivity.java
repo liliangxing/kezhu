@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -50,6 +51,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.time24.kezhu.R;
+import cn.time24.kezhu.utils.FileUtils;
 
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -71,7 +73,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private xWebChromeClient xwebchromeclient;
 	private WebChromeClient.CustomViewCallback     xCustomViewCallback;
 
-	private ImageView ivPlay;
+	private TextView ivPlay;
 	private LinearLayout ivLayOut;
 	private JSInterface jsInterface;
 	private String LAST_OPEN_URL;
@@ -300,7 +302,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 	public static String  getDownloadFilePath(String url){
 		String title =HttpUtils.getFileName(url);
-		File targetFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),DownloadService.DOWNLOAD_PATH+"/"+title );
+		File targetFile = new File(FileUtils.getMusicDir(),title );
 		return targetFile.toURI().toString();
 	}
 
@@ -360,6 +362,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		SubscribeMessageActivity.instance.musicService.mp.pause();
 		ivLayOut.setVisibility(View.GONE);
     }
+
+	public void toHide(View view){
+		ivLayOut.setVisibility(View.GONE);
+	}
 
 
 	/**
@@ -553,7 +559,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		 */
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			if(HttpUtils.IsVideoUrl(url)){
+			if(HttpUtils.IsVideoUrl(url)||url.contains("playVideo=1")){
 				Intent intent = new Intent(MainActivity.this, FullScreenActivity.class);
 				intent.putExtra("url",url);
 				startActivity(intent);
@@ -647,9 +653,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 		ws.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);//显示自己的html
 		ws.setMediaPlaybackRequiresUserGesture(false);
-		if (android.os.Build.VERSION.SDK_INT >= 19) {
+		/*if (android.os.Build.VERSION.SDK_INT >= 19) {
 			ws.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-		}
+		}*/
 		xwebchromeclient = new xWebChromeClient();
 		videowebview.setWebChromeClient(xwebchromeclient);
 		videowebview.setWebViewClient(new xWebViewClientent());

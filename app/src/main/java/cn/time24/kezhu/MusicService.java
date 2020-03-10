@@ -20,9 +20,9 @@ public class MusicService extends Service {
     }
 
     public static String[] musicDir = new String[]{
-            "http://js1.amtb.cn/media/mp3/61/61-126/61-126-0001.mp3",
-            "http://js1.amtb.cn/media/mp3/61/61-126/61-126-0001.mp3",
-            "http://js1.amtb.cn/media/mp3/61/61-232/61-232-0001.mp3"};
+            "https://tw3.amtb.de/media/mp3/61/61-126/61-126-0001.mp3",
+            "https://tw3.amtb.de/media/mp3/61/61-126/61-126-0001.mp3",
+            "https://tw3.amtb.de/media/mp3/61/61-232/61-232-0001.mp3"};
     private static int musicIndex = 1;
 
     public static MediaPlayer mp = new MediaPlayer();

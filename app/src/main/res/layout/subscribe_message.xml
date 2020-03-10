@@ -38,15 +38,23 @@
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/BtnStop"
-			android:text="@string/btnStop"
+			android:id="@+id/BtnRepeat"
+			android:text="@string/btnRepeat"
 			android:onClick="onClick"/>
 
 		<Button
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/BtnRepeat"
-			android:text="@string/btnRepeat"
+			android:id="@+id/BtnQuit"
+			android:text="@string/btnQuit"
+			android:onClick="onClick"/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			android:id="@+id/BtnStop"
+			android:text="@string/btnStop"
 			android:onClick="onClick"/>
 
 	</LinearLayout>
@@ -69,12 +77,6 @@
 			android:text="@string/btnNext"
 			android:onClick="onClick"/>
 
-		<Button
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/BtnQuit"
-			android:text="@string/btnQuit"
-			android:onClick="onClick"/>
 	</LinearLayout>
 
 </LinearLayout>

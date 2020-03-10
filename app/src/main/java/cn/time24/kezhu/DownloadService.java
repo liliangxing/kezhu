@@ -4,14 +4,13 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import cn.time24.kezhu.R;
+import cn.time24.kezhu.utils.FileUtils;
 
 /**
  * 下载服务 IntentService
@@ -26,7 +25,6 @@ import cn.time24.kezhu.R;
  */
 public class DownloadService extends IntentService {
     private static final int NOTIFICATION_ID = 100;
-    public static final String DOWNLOAD_PATH = "kezhu";
     public DownloadService(){
         super("download");
     }
@@ -47,17 +45,20 @@ public class DownloadService extends IntentService {
         //1. 获取音乐的路径
         String url=intent.getStringExtra("url");
         String title=intent.getStringExtra("title");
-        //2. 构建File对象，用于保存音乐文件
-        //   /mnt/sdcard/Music/_64/歌名.mp3
-        File targetFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),DownloadService.DOWNLOAD_PATH+"/"+title);
+        String totalSize = HttpUtils.getTotal(url);
+        File targetFile = new File(FileUtils.getMusicDir(),title);
+
+        //文件存在，大小
         if(targetFile.exists()){
-            if((targetFile.length()+"").equals( HttpUtils.getTotal(url))){
-                Log.i("info", "音乐已存在");
+            //网络异常，获取不了链接
+            if((targetFile.length()+"").equals(totalSize) || targetFile.length()> 1024 * 1024) {
+                doChangeFileLink(url);
                 return;
-            }else{
-                Log.i("info", "音乐大小不一致，删除旧文件");
             }
+                Log.i("info", "音乐大小不一致，删除旧文件");
+
         }
+        //下载并替换播放列表
         if(!targetFile.getParentFile().exists()){
             targetFile.getParentFile().mkdirs();
         }
