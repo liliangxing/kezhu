@@ -263,7 +263,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 		ClipData cmData = cm.getPrimaryClip();
 		ClipData.Item item = cmData.getItemAt(0);
-		String content = item.getText().toString();
+		String content = (item==null?"":item.getText().toString());
 		intent.putExtra("content", content);
 		startActivity(intent);
 	}
