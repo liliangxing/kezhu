@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,8 +16,6 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import cn.time24.kezhu.R;
-
 public class FullScreenActivity extends Activity {
 
     private WebView webView;
@@ -25,6 +23,9 @@ public class FullScreenActivity extends Activity {
     private View customView = null;
     private ProgressBar progressBar;
     private Intent data;
+
+    private String currentUrl;
+    private String paramUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +36,45 @@ public class FullScreenActivity extends Activity {
         fullVideo=findViewById(R.id.full_video);
         progressBar=findViewById(R.id.progress);
         data = getIntent();
-        webView.loadUrl(data.getStringExtra("url"));
-
+        paramUrl = data.getStringExtra("url");
+        currentUrl = paramUrl;
+        webView.loadUrl(currentUrl);
         webView.setWebChromeClient(new MyWebChromeClient());
         webView.setWebViewClient(new MyWebViewClient());
         setWebView();
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        data = getIntent();
+        paramUrl = data.getStringExtra("url");
+        if (!paramUrl.equals(currentUrl)) {
+            webView.loadUrl(paramUrl);
+            currentUrl = paramUrl;
+        }
+        super.onResume();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK://返回键
+                doFinish();
+            default:
+                break;
+        }
+        return super.onKeyDown(keyCode, event);//返回键的super处理的就是退出应用
+    }
+
+    public void doFinish() {
+        Intent intent2 = new Intent(FullScreenActivity.this, MainActivity.class);
+        startActivity(intent2);
     }
 
     @Override

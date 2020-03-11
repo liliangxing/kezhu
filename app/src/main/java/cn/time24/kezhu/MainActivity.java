@@ -16,7 +16,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
@@ -39,18 +38,11 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import cn.time24.kezhu.R;
 import cn.time24.kezhu.utils.FileUtils;
 
 
@@ -92,6 +84,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 		initwidget();
 		initListener();
+		initDownload();
+        initHomePage();
 
 		handler1 = new Handler(){
 			@Override
@@ -102,13 +96,28 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				}
 			}
 		};
-
-		String url = readFileData(FILE_NAME); // 读取文件
-		if(url.equals("")){url=HOME_PAGE;}
-		etUrl.setText(url);
-		videowebview.loadUrl(url);
-		linearLayout.setVisibility(View.GONE);
 	}
+
+    private void initHomePage(){
+        String url = FileUtils.readFileData(FILE_NAME,this); // 读取文件
+        if(url.equals("")){url=HOME_PAGE;}
+        etUrl.setText(url);
+        videowebview.loadUrl(url);
+        linearLayout.setVisibility(View.GONE);
+    }
+
+	private void initDownload(){
+        if(!downloaded) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    checkDownload(MusicService.musicDir[0]);
+                    checkDownload(MusicService.musicDir[2]);
+                    downloaded = true;
+                }
+            }).start();
+        }
+    }
 
 	@Override
 	protected void onResume() {
@@ -270,16 +279,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 	private void showToastMsg(String url){
 		LAST_OPEN_URL=url;
-		if(!downloaded) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					checkDownload(MusicService.musicDir[0]);
-					checkDownload(MusicService.musicDir[2]);
-					downloaded = true;
-				}
-			}).start();
-		}
 		Intent intent2 = new Intent(MainActivity.this, SubscribeMessageActivity.class);
 		intent2.putExtra("url", url);
 		startActivity(intent2);
@@ -309,41 +308,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private void setHomePage(){
 		String currentUrl = videowebview.getUrl();
 		etUrl.setText(currentUrl);
-		writeFileData(FILE_NAME,  currentUrl); // 写入文件
+		FileUtils.writeFileData(FILE_NAME,  currentUrl,this); // 写入文件
 		Toast.makeText(MainActivity.this,
 				"设置成功", Toast.LENGTH_SHORT).show();
 	}
 
 
-	//向指定的文件中写入指定的数据
-	public void writeFileData(String filename, String content){
-		try {
-			FileOutputStream fos = this.openFileOutput(filename, MODE_PRIVATE);
-			//将要写入的字符串转换为byte数组
-			byte[]  bytes = content.getBytes();
-			fos.write(bytes);//将byte数组写入文件
-			fos.close();//关闭文件输出流
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	//打开指定文件，读取其数据，返回字符串对象
-	public String readFileData(String fileName){
-		String result="";
-		try{
-			FileInputStream fis = this.openFileInput(fileName);
-			//获取文件长度
-			int lenght = fis.available();
-			byte[] buffer = new byte[lenght];
-			fis.read(buffer);
-			//将byte数组转换成指定格式的字符串
-			result = new String(buffer, "UTF-8");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return  result;
-	}
 	/**
 	 * 跳转操作
 	 * @param view
@@ -559,7 +530,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		 */
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			if(HttpUtils.IsVideoUrl(url)||url.contains("playVideo=1")){
+			if(HttpUtils.IsVideoUrl(url)){
 				Intent intent = new Intent(MainActivity.this, FullScreenActivity.class);
 				intent.putExtra("url",url);
 				startActivity(intent);

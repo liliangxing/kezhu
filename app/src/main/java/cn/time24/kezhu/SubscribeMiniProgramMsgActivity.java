@@ -16,12 +16,6 @@ import android.widget.TextView;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import cn.time24.kezhu.R;
-
-
 /**
  * Created by willenwu on 2018/5/10
  */
@@ -85,19 +79,19 @@ public class SubscribeMiniProgramMsgActivity extends Activity {
         contentText = miniProgramContentEt.getText().toString();
         if(miniProgramAppUrlEt.isChecked()){
             int index = baseUrl.indexOf("?");
-            String subContent=null;
+           /* String subContent=null;
             try {
                 subContent = URLEncoder.encode(
                         contentText.substring(0,contentText.length()>5?5:contentText.length()), "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            subContent = "scrollTo="+subContent;
+            subContent = "scrollTo="+subContent;*/
             if (index>0){
-                baseUrl = baseUrl+"&"+subContent;
-            }else {
+                baseUrl = baseUrl.split("\\?")[0];
+            }/*else {
                 baseUrl = baseUrl+"?"+subContent;
-            }
+            }*/
         }
         final  String url = getString(R.string.share_url_text)+baseUrl;
         miniProgramUrlEt.setText(url);

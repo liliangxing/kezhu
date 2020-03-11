@@ -148,14 +148,14 @@
     <string name="share_url_text">链接：</string>
     <string name="share_title_text">文章标题：</string>
     <string name="action_settings">Settings</string>
-    <string name="share_app_download_message">带文字定位和app下载地址</string>
+    <string name="share_app_download_message">带app下载地址</string>
 
     <string name="subscribe_message_title">播放器</string>
     <string name="action_close">返回上一页</string>
     <string name="btnPlayorPause">PlAY/PAUSE</string>
     <string name="btnStop">STOP</string>
     <string name="btnRepeat">目前是[单曲循环]</string>
-    <string name="btnQuit">QUIT</string>
+    <string name="btnQuit">返回</string>
     <string name="btnPre">PREVIOUS\n老法师念佛慢板[已下载]</string>
     <string name="btnNext">NEXT\n老法师念佛木鱼版[已下载]</string>
     <string name="play">Play</string>

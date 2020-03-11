@@ -87,19 +87,19 @@
                 android:id="@+id/iv_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="显示播放" />
+                android:text="播放器" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:onClick="toStopAndHide"
-                android:text="关闭播放" />
+                android:text="停止播放" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:onClick="toHide"
-                android:text="隐藏播放" />
+                android:text="隐藏该栏" />
         </LinearLayout>
     </LinearLayout>
     <WebView

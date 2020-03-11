@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
-import cn.time24.kezhu.R;
 import cn.time24.kezhu.utils.FileUtils;
 
 import java.io.File;
@@ -196,14 +194,6 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 		setIntent(intent);
 	}
 
-
-
-	private boolean compareFileEqual(long fileLength,String total){
-		if (!(fileLength+ "").equals(total) && total!=null){
-			return false;
-		}
-		return true;
-	}
 	@Override
 	protected void onResume() {
 		data = getIntent();
