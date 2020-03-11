@@ -38,7 +38,7 @@
             android:label="@string/app_name"
             android:theme="@style/MMTheme.Basic"/>
 
-        <activity android:name="cn.time24.kezhu.SubscribeMiniProgramMsgActivity"
+        <activity android:name="cn.time24.kezhu.SubscribePlayerActivity"
             android:label="@string/subscribe_message"
             android:theme="@style/MMTheme.Basic"/>
 

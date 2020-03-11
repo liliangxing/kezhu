@@ -256,7 +256,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	}
 
 	private void shareWeixin(){
-		Intent intent = new Intent(MainActivity.this, SubscribeMiniProgramMsgActivity.class);
+		Intent intent = new Intent(MainActivity.this, SubscribePlayerActivity.class);
 		intent.putExtra("title", videowebview.getTitle());
 		intent.putExtra("url", videowebview.getUrl());
 

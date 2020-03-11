@@ -20,7 +20,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * Created by willenwu on 2018/5/10
  */
 
-public class SubscribeMiniProgramMsgActivity extends Activity {
+public class SubscribePlayerActivity extends Activity {
 
     private IWXAPI api = WXAPIFactory.createWXAPI(this, Constants.APP_ID,false);
     private ClipboardManager cm;
