@@ -106,13 +106,13 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 							}
 
 							progressDialog.setTitle("提示");
-							progressDialog.setMessage("正在努力下载……"+(isResume?"onResume":"onCreate"));
+							progressDialog.setMessage("正在下载……"+(isResume?"onResume":"onCreate"));
 							progressDialog.show();
 						}
 
 						@Override
 						public void inProgress(float progress, long total, int id) {
-							progressDialog.setMessage("正在努力下载……"+((float)Math.round(progress*100*100)/100)+"%\n");
+							progressDialog.setMessage("正在下载……"+((float)Math.round(progress*100*100)/100)+"%\n");
 						}
 
 						@Override
