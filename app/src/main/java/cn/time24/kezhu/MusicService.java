@@ -77,7 +77,9 @@ public class MusicService extends Service {
         if(mp != null && musicIndex < (musicDir.length-1)) {
             mp.stop();
             try {
+                boolean looping =mp.isLooping();
                 mp.reset();
+                mp.setLooping(looping);
                 mp.setDataSource(musicDir[musicIndex+1]);
                 musicIndex++;
                 mp.prepare();
@@ -93,7 +95,9 @@ public class MusicService extends Service {
         if(mp != null && musicIndex > 0) {
             mp.stop();
             try {
+                boolean looping =mp.isLooping();
                 mp.reset();
+                mp.setLooping(looping);
                 mp.setDataSource(musicDir[musicIndex-1]);
                 musicIndex--;
                 mp.prepare();

@@ -71,7 +71,7 @@ public class DownloadService extends IntentService {
             byte[] buffer = new byte[1024*100];
             int length=0;
             int current = 0;
-            int total = Integer.parseInt(intent.getStringExtra("total"));
+            int total = Integer.parseInt(totalSize);
             while((length=is.read(buffer)) != -1){
                 fos.write(buffer, 0, length);
                 fos.flush();

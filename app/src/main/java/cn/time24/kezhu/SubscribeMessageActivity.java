@@ -136,8 +136,19 @@ public class SubscribeMessageActivity extends Activity implements View.OnClickLi
 					});
 		}else {
 			doPlay(file,fromResume);
+			//异步比较一下文件是否完整
+			downloadUrl(url);
+
 		}
 
+	}
+
+
+	public void downloadUrl(String url){
+		Intent intent = new Intent(SubscribeMessageActivity.this, DownloadService.class);
+		intent.putExtra("url",url);
+		intent.putExtra("title",HttpUtils.getFileName(url));
+		startService(intent);
 	}
 
 	private void doPlay(File targetFile,boolean fromResume){

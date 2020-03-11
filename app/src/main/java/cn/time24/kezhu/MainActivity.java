@@ -186,6 +186,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 					videowebview.goBack();
 					return true;//消费返回键
 				}else {
+					SubscribeMessageActivity.instance.moveTaskToBack(true);
 					moveTaskToBack(true);
 					return true;
 				}
@@ -295,7 +296,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		Intent intent = new Intent(MainActivity.this, DownloadService.class);
 		intent.putExtra("url",url);
 		intent.putExtra("title",HttpUtils.getFileName(url));
-		intent.putExtra("total",HttpUtils.getTotal(url));
 		startService(intent);
 	}
 
