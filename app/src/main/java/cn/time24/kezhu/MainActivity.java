@@ -66,13 +66,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private WebChromeClient.CustomViewCallback     xCustomViewCallback;
 
 	private TextView ivPlay;
-	private LinearLayout ivLayOut;
+	public LinearLayout ivLayOut;
 	private JSInterface jsInterface;
 	private String LAST_OPEN_URL;
 	private Handler handler1;
+	public static MainActivity instance;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
+		instance =this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		checkPermission();
@@ -186,7 +188,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 					videowebview.goBack();
 					return true;//消费返回键
 				}else {
-					SubscribeMessageActivity.instance.moveTaskToBack(true);
+					if(null !=SubscribePlayerActivity.instance) {
+						SubscribePlayerActivity.instance.moveTaskToBack(true);
+					}
 					moveTaskToBack(true);
 					return true;
 				}
@@ -256,15 +260,18 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	}
 
 	private void shareWeixin(){
-		Intent intent = new Intent(MainActivity.this, SubscribePlayerActivity.class);
+		Intent intent = new Intent(MainActivity.this, SubscribeMessageActivity.class);
 		intent.putExtra("title", videowebview.getTitle());
 		intent.putExtra("url", videowebview.getUrl());
 
 		//获取剪贴板管理器：
 		cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 		ClipData cmData = cm.getPrimaryClip();
-		ClipData.Item item = cmData.getItemAt(0);
-		String content = (item==null?"":item.getText().toString());
+		String content = null;
+		if(null != cmData) {
+			ClipData.Item item = cmData.getItemAt(0);
+			content = item.getText().toString();
+		}
 		intent.putExtra("content", content);
 		startActivity(intent);
 	}
@@ -280,7 +287,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 	private void showToastMsg(String url){
 		LAST_OPEN_URL=url;
-		Intent intent2 = new Intent(MainActivity.this, SubscribeMessageActivity.class);
+		Intent intent2 = new Intent(MainActivity.this, SubscribePlayerActivity.class);
 		intent2.putExtra("url", url);
 		startActivity(intent2);
 		ivLayOut.setVisibility(View.VISIBLE);
@@ -292,7 +299,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		downloadUrl(url);
 		return getDownloadFilePath(url);
 	}
-	private void downloadUrl(String url){
+	public void downloadUrl(String url){
 		Intent intent = new Intent(MainActivity.this, DownloadService.class);
 		intent.putExtra("url",url);
 		intent.putExtra("title",HttpUtils.getFileName(url));
@@ -330,7 +337,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	}
 
     public void toStopAndHide(View view){
-		SubscribeMessageActivity.instance.musicService.mp.pause();
+		SubscribePlayerActivity.instance.musicService.mp.pause();
 		ivLayOut.setVisibility(View.GONE);
     }
 

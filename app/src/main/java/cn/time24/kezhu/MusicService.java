@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 
 public class MusicService extends Service {
     public final IBinder binder = new MyBinder();
@@ -58,8 +59,14 @@ public class MusicService extends Service {
     public void playOrPause() {
         if(mp.isPlaying()){
             mp.pause();
+            if(MainActivity.instance.ivLayOut.getVisibility() != View.GONE) {
+                MainActivity.instance.ivLayOut.setVisibility(View.GONE);
+            }
         } else {
             mp.start();
+            if(MainActivity.instance.ivLayOut.getVisibility() != View.VISIBLE) {
+                MainActivity.instance.ivLayOut.setVisibility(View.VISIBLE);
+            }
         }
     }
     public void stop() {

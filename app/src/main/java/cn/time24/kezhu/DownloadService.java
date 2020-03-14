@@ -51,7 +51,7 @@ public class DownloadService extends IntentService {
         //文件存在，大小
         if(targetFile.exists()){
             //网络异常，获取不了链接
-            if((targetFile.length()+"").equals(totalSize) || targetFile.length()> 1024 * 1024) {
+            if((targetFile.length()+"").equals(totalSize)) {
                 doChangeFileLink(url);
                 return;
             }
