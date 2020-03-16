@@ -51,7 +51,9 @@ public class DownloadService extends IntentService {
         //文件存在，大小
         if(targetFile.exists()){
             //网络异常，获取不了链接
-            if((targetFile.length()+"").equals(totalSize)) {
+            if((targetFile.length()+"").equals(totalSize) ||
+                    (MusicService.musicDir[0]+MusicService.musicDir[2]).contains(url) &&
+                    targetFile.length()> 1024 * 1024) {
                 doChangeFileLink(url);
                 return;
             }
