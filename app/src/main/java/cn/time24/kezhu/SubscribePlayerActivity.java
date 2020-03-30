@@ -26,7 +26,7 @@ import okhttp3.Call;
 import okhttp3.Request;
 
 
-public class SubscribePlayerActivity extends Activity implements View.OnClickListener{
+public class SubscribePlayerActivity extends BaseActivity implements View.OnClickListener{
 
 
 	private SeekBar seekBar;
@@ -44,22 +44,7 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 	public static SubscribePlayerActivity instance;
 	public static boolean isRepeat =true;
 
-	private ServiceConnection sc = new ServiceConnection() {
-		@Override
-		public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-			musicService = ((MusicService.MyBinder)iBinder).getService();
-		}
 
-		@Override
-		public void onServiceDisconnected(ComponentName componentName) {
-			musicService = null;
-		}
-	};
-	private void bindServiceConnection() {
-		Intent intent = new Intent(SubscribePlayerActivity.this, MusicService.class);
-		startService(intent);
-		bindService(intent, sc, this.BIND_AUTO_CREATE);
-	}
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,7 +134,6 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 			return;
 		}
 		musicService = new MusicService(targetFile.getAbsolutePath());
-		bindServiceConnection();
 		seekBar.setProgress(musicService.mp.getCurrentPosition());
 		seekBar.setMax(musicService.mp.getDuration());
 		isStartedPlay=true;
@@ -258,7 +242,6 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 		if(isStartedPlay) {
 			musicService.stop();
 		}
-		unbindService(sc);
 		super.onDestroy();
 	}
 

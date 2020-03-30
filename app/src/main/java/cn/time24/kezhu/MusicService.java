@@ -9,8 +9,8 @@ import android.util.Log;
 import android.view.View;
 
 public class MusicService extends Service {
-    public final IBinder binder = new MyBinder();
-    public class MyBinder extends Binder {
+    public final IBinder binder = new PlayBinder();
+    public class PlayBinder extends Binder {
         MusicService getService() {
             return MusicService.this;
         }

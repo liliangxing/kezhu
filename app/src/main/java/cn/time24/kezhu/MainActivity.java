@@ -46,7 +46,7 @@ import java.io.File;
 import cn.time24.kezhu.utils.FileUtils;
 
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 	private WebView videowebview;
 	private LinearLayout linearLayout;

@@ -161,4 +161,6 @@
     <string name="play">Play</string>
     <string name="playing">Playing</string>
     <string name="pause">Pause</string>
+
+    <string name="loading">loading</string>
 </resources>
