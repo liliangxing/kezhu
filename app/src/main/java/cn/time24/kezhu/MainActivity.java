@@ -46,7 +46,7 @@ import java.io.File;
 import cn.time24.kezhu.utils.FileUtils;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener{
 
 	private WebView videowebview;
 	private LinearLayout linearLayout;
@@ -171,12 +171,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 					return true;
 				}
 				if(islandport){
-					if(videolandport.getVisibility()==View.GONE ) {
-						videolandport.setVisibility(View.VISIBLE);
-						return true;
-					}else {
-						videolandport.callOnClick();
-					}
+					videolandport.callOnClick();
+					return true;
 				}
 				if(videolandport.getVisibility()==View.VISIBLE ) {
 					videolandport.setVisibility(View.GONE);
@@ -647,6 +643,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 				case R.id.video_landport:
 					if (islandport) {
 						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+						videolandport.setVisibility(View.VISIBLE);
 					}else {
 						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 						videolandport.setVisibility(View.GONE);

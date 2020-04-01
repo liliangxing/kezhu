@@ -41,17 +41,17 @@ public abstract class BaseActivity extends Activity {
        // setSystemBarTransparent();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         handler = new Handler(Looper.getMainLooper());
-        bindService();
+       // bindService();
     }
 
+/*
     private void bindService() {
         Intent intent = new Intent();
         intent.setClass(this, MusicService.class);
         serviceConnection = new PasteCopyServiceConnection();
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
-
-    private class PasteCopyServiceConnection implements ServiceConnection {
+   private class PasteCopyServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             pasteCopyService = ((MusicService.PlayBinder) service).getService();
@@ -62,7 +62,7 @@ public abstract class BaseActivity extends Activity {
         public void onServiceDisconnected(ComponentName name) {
             Log.e(getClass().getSimpleName(), "service disconnected");
         }
-    }
+    }*/
 
     protected void onServiceBound() {
     }
