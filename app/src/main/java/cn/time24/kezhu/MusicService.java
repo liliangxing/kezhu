@@ -4,11 +4,14 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
 public class MusicService extends Service {
+    private static final long TIME_UPDATE = 300L;
     public final IBinder binder = new MyBinder();
     public class MyBinder extends Binder {
         MusicService getService() {
@@ -31,9 +34,11 @@ public class MusicService extends Service {
         this(null);
     }
     public MusicService(String url) {
+        handler = new Handler(Looper.getMainLooper());
         start(url,false);
         mp.setLooping(true);
     }
+    private Handler handler;
 
     public void reStart(String url) {
         start(url,true);
@@ -50,11 +55,20 @@ public class MusicService extends Service {
                 mp.seekTo(0);
             }
             mp.start();
+            handler.post(mPublishRunnable);
         } catch (Exception e) {
             Log.d("hint","can't get to the song");
             e.printStackTrace();
         }
     }
+
+    private Runnable mPublishRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+            handler.postDelayed(this, TIME_UPDATE);
+        }
+    };
 
     public void playOrPause() {
         if(mp.isPlaying()){
@@ -70,6 +84,7 @@ public class MusicService extends Service {
         }
     }
     public void stop() {
+        handler.removeCallbacks(mPublishRunnable);
         if(mp != null) {
             mp.stop();
             try {
