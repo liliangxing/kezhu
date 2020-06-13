@@ -47,7 +47,7 @@
             android:label="@string/subscribe_message_title"/>
 
         <activity android:name="cn.time24.kezhu.FullScreenActivity"
-            android:launchMode="singleInstance" android:exported="true"
+            android:launchMode="singleTop" android:exported="true"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize" >
         </activity>
 
