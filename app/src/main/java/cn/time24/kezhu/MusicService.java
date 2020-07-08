@@ -1,12 +1,16 @@
 package cn.time24.kezhu;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -137,5 +141,23 @@ public class MusicService extends Service {
         mp.stop();
         mp.release();
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        startForeground( 0x111, buildNotification(this));
+    }
+
+    private Notification buildNotification(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setContentIntent(pendingIntent);
+        return builder.build();
     }
 }

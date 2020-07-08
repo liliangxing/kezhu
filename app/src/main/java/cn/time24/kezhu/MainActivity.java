@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private ClipboardManager cm;
 
 	private FrameLayout videoview;// 全屏时视频加载view
-	private Button videolandport;
+	//private Button videolandport;
 	private Boolean islandport = false;//true表示此时是竖屏，false表示此时横屏。
 	private View xCustomView;
 	private xWebChromeClient xwebchromeclient;
@@ -170,14 +170,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
 					hideCustomView();
 					return true;
 				}
-				if(islandport){
+				/*if(islandport){
 					videolandport.callOnClick();
 					return true;
 				}
 				if(videolandport.getVisibility()==View.VISIBLE ) {
 					videolandport.setVisibility(View.GONE);
 					return true;
-				}
+				}*/
 				//Webview能不能后退
 				if(videowebview.canGoBack()){
 					//返回上一个页
@@ -539,11 +539,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				startActivity(intent);
 				return true;
 			}
-			if(url.contains("playVideo=1")){
+			/*if(url.contains("playVideo=1")){
 				videolandport.setVisibility(View.VISIBLE);
 			}else {
 				videolandport.setVisibility(View.GONE);
-			}
+			}*/
 			videowebview.loadUrl(url);
 			return true;//true就是自己处理
 		}
@@ -596,14 +596,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 	private void initListener() {
 		// TODO Auto-generated method stub
-		videolandport.setOnClickListener(this);
+		//videolandport.setOnClickListener(this);
 		ivPlay.setOnClickListener(this);
 	}
 
 	private void initwidget() {
 		// TODO Auto-generated method stub
 		videoview = (FrameLayout) findViewById(R.id.video_view);
-		videolandport = (Button) findViewById(R.id.video_landport);
+		//videolandport = (Button) findViewById(R.id.video_landport);
 		videowebview = (WebView) findViewById(R.id.webview);
 		WebSettings ws = videowebview.getSettings();
 		/**
@@ -640,7 +640,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-				case R.id.video_landport:
+				/*case R.id.video_landport:
 					if (islandport) {
 						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 						videolandport.setVisibility(View.VISIBLE);
@@ -650,7 +650,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 					}
 
 					islandport = !islandport;
-					break;
+					break;*/
 				case R.id.iv_play:
 					showToastMsg(LAST_OPEN_URL);
 					break;

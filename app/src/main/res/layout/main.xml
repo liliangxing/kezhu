@@ -63,14 +63,14 @@
         android:layout_height="fill_parent"
         android:visibility="gone"
         ></FrameLayout>
-    <Button
+    <!--<Button
         android:id="@+id/video_landport"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:text="横竖屏切换(点击视频链接，全屏收看视频)"
         android:gravity="center"
-        />
+        />-->
     <LinearLayout
         android:id="@+id/iv_play_layout"
         android:layout_width="fill_parent"
