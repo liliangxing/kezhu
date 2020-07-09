@@ -20,7 +20,7 @@ public class MusicService extends Service {
     private static final long TIME_UPDATE = 300L;
     public final IBinder binder = new MyBinder();
     public class MyBinder extends Binder {
-        MusicService getService() {
+        public MusicService getService() {
             return MusicService.this;
         }
     }
