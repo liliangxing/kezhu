@@ -708,20 +708,4 @@ public class MainActivity extends Activity implements View.OnClickListener,QuitT
 			videowebview.destroy();
 		}
 	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (videowebview != null) {
-			videowebview.onResume();
-		}
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if (videowebview != null) {
-			videowebview.onPause();
-		}
-	}
 }
