@@ -697,7 +697,7 @@ public class MainActivity extends Activity implements View.OnClickListener,QuitT
 		if (timerItem == null) {
 			return;
 		}
-		String title = getString(R.string.menu_timer);
+		String title = getString(R.string.menu_timer_stop);
 		timerItem.setTitle(remain == 0 ? title : SystemUtils.formatTime(title + "(mm:ss)", remain));
 	}
 	@Override
