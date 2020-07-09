@@ -1,4 +1,4 @@
-package cn.time24.kezhu;
+package cn.time24.kezhu.service;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -13,6 +13,8 @@ import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
+
+import cn.time24.kezhu.MainActivity;
 
 public class MusicService extends Service {
     private static final long TIME_UPDATE = 300L;
@@ -159,5 +161,28 @@ public class MusicService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent);
         return builder.build();
+    }
+
+    public static void startCommand(Context context, String action) {
+        Intent intent = new Intent(context, MusicService.class);
+        intent.setAction(action);
+        context.startService(intent);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && intent.getAction() != null) {
+            switch (intent.getAction()) {
+                case "cn.time24.kezhu.ACTION_STOP":
+                    stopTimer();
+                    break;
+            }
+        }
+        return START_NOT_STICKY;
+    }
+
+    private void stopTimer() {
+        mp.stop();
+        QuitTimer.get().stop();
     }
 }

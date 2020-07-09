@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="cn.time24.kezhu.MainActivity">
+    <item android:id="@+id/menu_forward" android:title="@string/forward" app:showAsAction="never" />
+    <item android:id="@+id/menu_backward" android:title="@string/backward" app:showAsAction="never" />
+    <item android:id="@+id/menu_refresh" android:title="@string/refresh" app:showAsAction="never" />
+    <item android:id="@+id/menu_address" android:title="@string/address" app:showAsAction="never" />
+    <item android:id="@+id/menu_homepage" android:title="@string/homepage" app:showAsAction="never" />
+    <item android:id="@+id/menu_shareWeChat" android:title="@string/shareWeChat" app:showAsAction="never" />
+    <item android:id="@+id/menu_timer" android:title="@string/menu_timer" app:showAsAction="never" />
+</menu>

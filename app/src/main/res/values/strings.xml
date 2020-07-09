@@ -163,4 +163,13 @@
     <string name="pause">Pause</string>
 
     <string name="loading">loading</string>
+    <string name="forward">前进</string>
+    <string name="backward">后退</string>
+    <string name="refresh">刷新</string>
+    <string name="address">显/隐地址栏</string>
+    <string name="homepage">设为主页</string>
+    <string name="shareWeChat">分享到微信</string>
+    <string name="menu_timer">定时停止播放</string>
+    <string name="timer_set">设置成功，将于%s分钟后关闭</string>
+    <string name="timer_cancel">定时停止播放已取消</string>
 </resources>

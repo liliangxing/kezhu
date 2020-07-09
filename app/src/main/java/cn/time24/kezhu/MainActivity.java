@@ -35,7 +35,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -43,10 +42,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+
+import cn.time24.kezhu.service.MusicService;
+import cn.time24.kezhu.service.QuitTimer;
 import cn.time24.kezhu.utils.FileUtils;
+import cn.time24.kezhu.utils.SystemUtils;
 
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener,QuitTimer.OnTimerListener{
 
 	private WebView videowebview;
 	private LinearLayout linearLayout;
@@ -72,10 +75,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private Handler handler1;
 	public static MainActivity instance;
 
+	private MenuItem timerItem;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		instance =this;
         super.onCreate(savedInstanceState);
+		QuitTimer.get().init(this);
         setContentView(R.layout.main);
 		checkPermission();
 		initView();
@@ -98,6 +103,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				}
 			}
 		};
+		QuitTimer.get().setOnTimerListener(this);
 	}
 
     private void initHomePage(){
@@ -199,21 +205,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		System.out.println("onCreateOptionsMenu");
-		//前进，后退，刷新、测试
-		menu.addSubMenu(0, 0, 0, "前进");
-		menu.addSubMenu(0, 1, 1, "后退");
-		menu.addSubMenu(0, 2, 2, "刷新");
-		menu.addSubMenu(0, 3, 3, "显/隐地址栏");
-		menu.addSubMenu(0, 4, 4, "设为主页");
-		menu.addSubMenu(0, 5, 5, "分享到微信");
+		getMenuInflater().inflate(R.menu.main, menu);
+		timerItem = menu.findItem(R.id.menu_timer);
 		return true;//自己处理，显示菜单
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		System.out.println("onOptionsItemSelected");
 		switch (item.getItemId()) {
-			case 0://前进
+			case R.id.menu_forward://前进
 				if(videowebview.canGoForward()){
 					videowebview.goForward();
 				}else{
@@ -222,7 +222,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				}
 
 				break;
-			case 1://后退
+			case R.id.menu_backward://后退
 				if(videowebview.canGoBack()){
 					videowebview.goBack();
 				}else{
@@ -231,28 +231,51 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				}
 
 				break;
-			case 2://刷新
+			case R.id.menu_refresh://刷新
 				videowebview.reload();//重新加载
 
 				break;
-			case 3://地址栏
+			case R.id.menu_address://地址栏
 				if(linearLayout.getVisibility()==View.GONE) {
 					linearLayout.setVisibility(View.VISIBLE);
 				}else {
 					linearLayout.setVisibility(View.GONE);
 				}
 				break;
-			case 4://测试
+			case R.id.menu_homepage://测试
 				setHomePage();
 				break;
-			case 5://测试
+			case R.id.menu_shareWeChat://测试
 				shareWeixin();
 				break;
-
+			case R.id.menu_timer://测试
+				timerDialog();
+				break;
 			default:
 				break;
 		}
 		return true;//自己处理
+	}
+
+	public void timerDialog() {
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.menu_timer)
+				.setItems(getResources().getStringArray(R.array.timer_text), (dialog, which) -> {
+					int[] times = getResources().getIntArray(R.array.timer_int);
+					startTimer(times[which]);
+				})
+				.show();
+	}
+
+	private void startTimer(int minute) {
+		QuitTimer.get().start(minute * 60 * 1000);
+		if (minute > 0) {
+			Toast.makeText(MainActivity.this,
+					getString(R.string.timer_set, String.valueOf(minute)), Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(MainActivity.this,
+					R.string.timer_cancel, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void shareWeixin(){
@@ -680,5 +703,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	public void finish() {
 		//super.finish(); //记住不要执行此句
 		moveTaskToBack(true); //设置该activity永不过期，即不执行onDestroy()
+	}
+
+	@Override
+	public void onTimer(long remain) {
+		if (timerItem == null) {
+			return;
+		}
+		String title = getString(R.string.menu_timer);
+		timerItem.setTitle(remain == 0 ? title : SystemUtils.formatTime(title + "(mm:ss)", remain));
+	}
+	@Override
+	protected void onDestroy() {
+		QuitTimer.get().setOnTimerListener(null);
+		super.onDestroy();
 	}
 }
