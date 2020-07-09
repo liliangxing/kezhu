@@ -702,6 +702,7 @@ public class MainActivity extends Activity implements View.OnClickListener,QuitT
 	@Override
 	public void finish() {
 		//super.finish(); //记住不要执行此句
+		videowebview.loadUrl(HOME_PAGE);
 		moveTaskToBack(true); //设置该activity永不过期，即不执行onDestroy()
 	}
 
