@@ -127,10 +127,6 @@ public class MainActivity extends Activity implements View.OnClickListener,QuitT
         }
     }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
 	/**
 	 * 初始化控件
 	 */
@@ -708,5 +704,24 @@ public class MainActivity extends Activity implements View.OnClickListener,QuitT
 	protected void onDestroy() {
 		QuitTimer.get().setOnTimerListener(null);
 		super.onDestroy();
+		if (videowebview != null) {
+			videowebview.destroy();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (videowebview != null) {
+			videowebview.onResume();
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (videowebview != null) {
+			videowebview.onPause();
+		}
 	}
 }
