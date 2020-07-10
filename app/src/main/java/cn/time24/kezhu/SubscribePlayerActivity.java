@@ -31,7 +31,7 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 
 
 	private SeekBar seekBar;
-	protected MusicService musicService;
+	protected MusicService musicService = MainActivity.musicService;
 	private TextView musicStatus;
 	private TextView musicTime;
 	private Button btnPlayOrPause;
@@ -45,22 +45,6 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 	public static SubscribePlayerActivity instance;
 	public static boolean isRepeat =true;
 
-	private ServiceConnection sc = new ServiceConnection() {
-		@Override
-		public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-			musicService = ((MusicService.MyBinder)iBinder).getService();
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName componentName) {
-			musicService = null;
-		}
-	};
-	private void bindServiceConnection() {
-		Intent intent = new Intent(SubscribePlayerActivity.this, MusicService.class);
-		startService(intent);
-		bindService(intent, sc, this.BIND_AUTO_CREATE);
-	}
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,8 +133,7 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 			musicService.reStart(targetFile.getAbsolutePath());
 			return;
 		}
-		musicService = new MusicService(targetFile.getAbsolutePath());
-		bindServiceConnection();
+		musicService.setUrl(targetFile.getAbsolutePath());
 		seekBar.setProgress(musicService.mp.getCurrentPosition());
 		seekBar.setMax(musicService.mp.getDuration());
 		isStartedPlay=true;
@@ -259,7 +242,6 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 		if(isStartedPlay) {
 			musicService.stop();
 		}
-		unbindService(sc);
 		super.onDestroy();
 	}
 

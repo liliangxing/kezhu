@@ -1,8 +1,6 @@
 package cn.time24.kezhu;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
@@ -11,15 +9,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -49,7 +44,7 @@ import cn.time24.kezhu.utils.FileUtils;
 import cn.time24.kezhu.utils.SystemUtils;
 
 
-public class MainActivity extends Activity implements View.OnClickListener,QuitTimer.OnTimerListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener,QuitTimer.OnTimerListener{
 
 	private WebView videowebview;
 	private LinearLayout linearLayout;
@@ -80,9 +75,7 @@ public class MainActivity extends Activity implements View.OnClickListener,QuitT
     public void onCreate(Bundle savedInstanceState) {
 		instance =this;
         super.onCreate(savedInstanceState);
-		QuitTimer.get().init(this);
         setContentView(R.layout.main);
-		checkPermission();
 		initView();
 		jsInterface = new JSInterface();
 		videowebview.addJavascriptInterface(
@@ -136,31 +129,6 @@ public class MainActivity extends Activity implements View.OnClickListener,QuitT
 		linearLayout = findViewById(R.id.ll_web);
 		ivPlay = findViewById(R.id.iv_play);
 		ivLayOut = findViewById(R.id.iv_play_layout);
-	}
-
-
-	private void checkPermission() {
-		int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-		if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(this,
-					new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-					Constants.PERMISSIONS_REQUEST_STORAGE);
-		}
-	}
-
-	@Override
-	public void onRequestPermissionsResult(int requestCode,
-										   String permissions[], int[] grantResults) {
-		switch (requestCode) {
-			case Constants.PERMISSIONS_REQUEST_STORAGE: {
-				if (grantResults.length > 0
-						&& grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				} else {
-					Toast.makeText(MainActivity.this,"Please give me storage permission!",Toast.LENGTH_LONG).show();
-				}
-				return;
-			}
-		}
 	}
 
 	@Override

@@ -36,11 +36,8 @@ public class MusicService extends Service {
     private static int musicIndex = 1;
 
     public static MediaPlayer mp = new MediaPlayer();
-    public MusicService() {
-        this(null);
-    }
-    public MusicService(String url) {
-        handler = new Handler(Looper.getMainLooper());
+
+    public void setUrl(String url) {
         start(url,false);
         mp.setLooping(true);
     }
@@ -148,6 +145,8 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        handler = new Handler(Looper.getMainLooper());
+        QuitTimer.get().init(this);
         startForeground( 0x111, buildNotification(this));
     }
 
