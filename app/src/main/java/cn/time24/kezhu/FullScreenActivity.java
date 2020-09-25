@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -60,21 +59,6 @@ public class FullScreenActivity extends Activity {
             currentUrl = paramUrl;
         }
         super.onResume();
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK://返回键
-                doFinish();
-            default:
-                break;
-        }
-        return super.onKeyDown(keyCode, event);//返回键的super处理的就是退出应用
-    }
-
-    public void doFinish() {
-        Intent intent2 = new Intent(FullScreenActivity.this, MainActivity.class);
-        startActivity(intent2);
     }
 
     @Override

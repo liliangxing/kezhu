@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
+import cn.time24.kezhu.service.AudioFocusManager;
 import cn.time24.kezhu.service.MusicService;
 import cn.time24.kezhu.utils.FileUtils;
 
@@ -31,7 +32,7 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 
 
 	private SeekBar seekBar;
-	protected MusicService musicService = MainActivity.musicService;
+	public MusicService musicService = MainActivity.musicService;
 	private TextView musicStatus;
 	private TextView musicTime;
 	private Button btnPlayOrPause;
@@ -45,6 +46,7 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 	public static SubscribePlayerActivity instance;
 	public static boolean isRepeat =true;
 
+	private AudioFocusManager audioFocusManager;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 		data = getIntent();
 		paramUrl = data.getStringExtra("url");
 		currentUrl = paramUrl;
-
+		audioFocusManager = new AudioFocusManager(this);
 
 
 		seekBar = (SeekBar)this.findViewById(R.id.MusicSeekBar);
@@ -142,8 +144,8 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 	public Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
-
 			if(musicService.mp.isPlaying()) {
+				audioFocusManager.requestAudioFocus();
 				musicStatus.setText(getResources().getString(R.string.playing));
 				btnPlayOrPause.setText(getResources().getString(R.string.pause).toUpperCase());
 			} else {
