@@ -188,7 +188,6 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 			currentUrl = paramUrl;
 		}
 		musicService.startPlayer();
-		seekBar.setMax(musicService.mp.getDuration());
 		handler.post(runnable);
 		super.onResume();
 		Log.d("hint", "handler post runnable");
