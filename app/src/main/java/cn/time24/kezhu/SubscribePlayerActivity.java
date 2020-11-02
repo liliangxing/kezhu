@@ -214,7 +214,7 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 				}
 				break;
 			case R.id.BtnQuit:
-				doFinish();
+				startMainActivity();
 				break;
 			case R.id.btnPre:
 				musicService.preMusic();
@@ -235,16 +235,16 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 		super.onDestroy();
 	}
 
-	public void doFinish() {
-		Intent intent2 = new Intent(SubscribePlayerActivity.this, MainActivity.class);
-		startActivity(intent2);
+	public void startMainActivity() {
+		Intent Intent = new Intent(SubscribePlayerActivity.this, MainActivity.class);
+		startActivity(Intent);
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK://返回键
-				doFinish();
+				startMainActivity();
 			default:
 				break;
 		}
