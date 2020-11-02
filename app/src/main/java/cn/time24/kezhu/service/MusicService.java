@@ -24,6 +24,7 @@ public class MusicService extends Service {
             return MusicService.this;
         }
     }
+    private AudioFocusManager audioFocusManager;
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
@@ -54,10 +55,11 @@ public class MusicService extends Service {
             mp.reset();
             mp.setDataSource(musicDir[musicIndex]);
             mp.prepare();
+            mp.start();
             if(isSeek) {
                 mp.seekTo(0);
             }
-            mp.start();
+            startPlayer();
             handler.post(mPublishRunnable);
         } catch (Exception e) {
             Log.d("hint","can't get to the song");
@@ -68,22 +70,43 @@ public class MusicService extends Service {
     private Runnable mPublishRunnable = new Runnable() {
         @Override
         public void run() {
-
             handler.postDelayed(this, TIME_UPDATE);
         }
     };
 
-    public void playOrPause() {
-        if(mp.isPlaying()){
+    public void startPlayer() {
+        audioFocusManager.requestAudioFocus();
+        if (mp.isPlaying()) {
+            return;
+        }else {
+            mp.start();
+            if (MainActivity.instance.ivLayOut.getVisibility() != View.VISIBLE) {
+                MainActivity.instance.ivLayOut.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public void pausePlayer() {
+        pausePlayer(true);
+     }
+    public void pausePlayer(boolean abandonAudioFocus) {
+        if (mp.isPlaying()) {
             mp.pause();
             if(MainActivity.instance.ivLayOut.getVisibility() != View.GONE) {
                 MainActivity.instance.ivLayOut.setVisibility(View.GONE);
             }
+        }else{
+            return;
+        }
+        if (abandonAudioFocus) {
+            audioFocusManager.abandonAudioFocus();
+        }
+    }
+    public void playOrPause() {
+        if(mp.isPlaying()){
+            pausePlayer();
         } else {
-            mp.start();
-            if(MainActivity.instance.ivLayOut.getVisibility() != View.VISIBLE) {
-                MainActivity.instance.ivLayOut.setVisibility(View.VISIBLE);
-            }
+            startPlayer();
         }
     }
     public void stop() {
@@ -147,6 +170,7 @@ public class MusicService extends Service {
         super.onCreate();
         handler = new Handler(Looper.getMainLooper());
         QuitTimer.get().init(this);
+        audioFocusManager = new AudioFocusManager(this);
         startForeground( 0x111, buildNotification(this));
     }
 

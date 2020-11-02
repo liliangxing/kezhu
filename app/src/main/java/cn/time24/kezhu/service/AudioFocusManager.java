@@ -37,7 +37,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
             case AudioManager.AUDIOFOCUS_GAIN:
                 if (isPausedByFocusLossTransient) {
                     // 通话结束，恢复播放
-                    MainActivity.musicService.mp.start();
+                    MainActivity.musicService.startPlayer();
                 }
 
                 // 恢复音量
@@ -47,11 +47,11 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                 break;
             // 永久丢失焦点，如被其他播放器抢占
             case AudioManager.AUDIOFOCUS_LOSS:
-                MainActivity.musicService.mp.pause();
+                MainActivity.musicService.pausePlayer();
                 break;
             // 短暂丢失焦点，如来电
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                MainActivity.musicService.mp.pause();
+                MainActivity.musicService.pausePlayer(false);
                 isPausedByFocusLossTransient = true;
                 break;
             // 瞬间丢失焦点，如通知
