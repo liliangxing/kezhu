@@ -188,12 +188,6 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 			currentUrl = paramUrl;
 		}
 		musicService.startPlayer();
-		if(musicService.mp.isPlaying()) {
-			musicStatus.setText(getResources().getString(R.string.playing));
-		} else {
-			musicStatus.setText(getResources().getString(R.string.pause));
-		}
-		seekBar.setProgress(musicService.mp.getCurrentPosition());
 		seekBar.setMax(musicService.mp.getDuration());
 		handler.post(runnable);
 		super.onResume();
