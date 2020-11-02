@@ -187,14 +187,12 @@ public class SubscribePlayerActivity extends Activity implements View.OnClickLis
 			downloadAndPlay(paramUrl,true);
 			currentUrl = paramUrl;
 		}
-		audioFocusManager.requestAudioFocus();
-		musicService.mp.start();
+		musicService.startPlayer();
 		if(musicService.mp.isPlaying()) {
 			musicStatus.setText(getResources().getString(R.string.playing));
 		} else {
 			musicStatus.setText(getResources().getString(R.string.pause));
 		}
-
 		seekBar.setProgress(musicService.mp.getCurrentPosition());
 		seekBar.setMax(musicService.mp.getDuration());
 		handler.post(runnable);
