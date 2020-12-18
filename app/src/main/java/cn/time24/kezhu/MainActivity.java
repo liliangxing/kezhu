@@ -320,7 +320,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,Q
 	}
 
     public void toStopAndHide(View view){
-		SubscribePlayerActivity.instance.musicService.mp.pause();
+		SubscribePlayerActivity.instance.musicService.pausePlayer();
 		ivLayOut.setVisibility(View.GONE);
     }
 
