@@ -12,6 +12,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -531,8 +532,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,Q
 			}else {
 				videolandport.setVisibility(View.GONE);
 			}*/
-			videowebview.loadUrl(url);
-			return true;//true就是自己处理
+			try {
+				if (url.startsWith("http:") || url.startsWith("https:")) {
+					videowebview.loadUrl(url);
+				} else {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+					startActivity(intent);
+				}
+				return true;
+			} catch (Exception e){
+				return false;
+			}
 		}
 		//重写页面打开和结束的监听。添加友好，弹出菊花
 		/**
